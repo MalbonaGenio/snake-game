@@ -1,0 +1,22 @@
+html, body {
+    margin: 10;
+    padding: 10;
+}
+/* flex allows us to put the squares into .grid instead of one on top of each other. with wrap we make them wrap next to each other inside all the grid. not only the width. */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    height: 200px;
+    border: solid 2px black;
+}
+/* this is the style we give in the JS to the square created in the for loop. */
+.square {
+    width: 20px;
+    height: 20px;
+    background-color: blue;
+}
+
+.snake {
+  background-color: green;
+}
