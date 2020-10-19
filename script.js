@@ -6,9 +6,10 @@ let squares = []
 let snakePosition = [15,14,13]
 let direction = 1 // sets the direction where the snake is moving.
 let gameWidth = 10 //sets the witdh of the grid for up and down movement
+let applePosition = 0 
 
 function createGrid() {
-  for (let i = 0; i < 100; i++){
+  for (let i = 0; i < gameWidth * gameWidth; i++){
     const square = document.createElement("div")
     square.classList.add("square")
     grid.append(square)
@@ -25,10 +26,10 @@ function move() {
 
   //If the position is more or equal to 100 or less than 0 and the direction we are out of the grid. If the modulo is equal to 0 (left side of the grid) or 9 (right side of the grid) and the direction is towards the respective boundary we are out of the grid. If the head of the snake is on a square with the style snake it has folded over itself.
   if (
-    (snakePosition[0] + gameWidth >= 100 && direction === 10) || //hit bottom
-    (snakePosition[0] % gameWidth === 9 && direction === 1) || //hit right wall
+    (snakePosition[0] + gameWidth >= gameWidth * gameWidth && direction === gameWidth) || //hit bottom
+    (snakePosition[0] % gameWidth === gameWidth - 1 && direction === 1) || //hit right wall
     (snakePosition[0] % gameWidth === 0 && direction === -1) || //hit left wall
-    (snakePosition[0] - gameWidth < 0 && direction === -10) ||//hit top
+    (snakePosition[0] - gameWidth < 0 && direction === -gameWidth) ||//hit top
     squares[snakePosition[0] + direction].classList.contains('snake') //fold on itself
     )
     return clearInterval(timer) // Stop timer
@@ -44,6 +45,19 @@ function move() {
 move()
 
 const timer = setInterval(move, 1000)
+
+function genApple (){
+  do {
+    applePosition = Math.floor(Math.random() * squares.length)
+
+  } while (squares[applePosition].classList.contains('snake'))
+  squares[applePosition].classList.add('apple')
+}
+
+genApple()
+
+
+
 // Keyboard keycodes:
 // 39 is right arrow
 // 38 is for the up arrow
