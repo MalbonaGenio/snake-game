@@ -3,12 +3,13 @@ const startButton = document.getElementById('start')
 const scoreDisplay = document.getElementById('score')
 
 let squares = []
-let snakePosition = [15,14,13]
+let snakePosition = [35,34,33]
 let direction = 1 // sets the direction where the snake is moving.
 let gameWidth = 10 //sets the witdh of the grid for up and down movement
 let applePosition = 0 
 let score = 0
 let timeInterval = 1000 //set the timer for the movement of the snake.
+let timer = 0 //declares 
 let speed = 0.9 // value used to speed up the game every time an apple is eaten.
 
 function createGrid() {
@@ -24,6 +25,20 @@ createGrid()
 
 // change the style on the squares array on the indexes specified by snake position.
 snakePosition.forEach(index => squares[index].classList.add("snake"))
+
+function startGame() {
+  clearInterval(timer)
+  snakePosition.forEach(index => squares[index].classList.remove('snake')) //same forEach as we use to add the class snake to squares from snakePosition
+  squares[applePosition].classList.remove('apple')
+  direction = 1
+  score = 0
+  scoreDisplay.textContent = score
+  timeInterval = 1000
+  snakePosition = [35,34,33]
+  snakePosition.forEach(index => squares[index].classList.add('snake')) //reads the snake
+  genApple()
+  timer = setInterval(move, 1000)
+}
 
 function move() {
 
@@ -59,9 +74,7 @@ function move() {
   squares[snakePosition[0]].classList.add('snake')
 }
 
-move()
 
-let timer = setInterval(move, 1000)
 
 function genApple (){
   do {
@@ -96,3 +109,4 @@ function control(key) {
 }
 
 document.addEventListener("keydown", control)
+startButton.addEventListener('click', startGame)
